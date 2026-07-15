@@ -32,4 +32,11 @@ package common_pkg;
         SLT
     } alu_op_t;
 
+    typedef enum logic [1:0] {
+        BYTE,
+        HALF,
+        RSVD,
+        WORD
+    } mem_access_t;
+
 endpackage
