@@ -19,4 +19,17 @@ package common_pkg;
         J_TYPE      = 7'h6F;
     } riscv_op_t;
 
+    typedef enum logic [3:0] {
+        ADD,
+        SUB,
+        SLL,
+        SRL,
+        SRA,
+        OR,
+        AND,
+        XOR,
+        SLTU,
+        SLT
+    } alu_op_t;
+
 endpackage
