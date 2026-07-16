@@ -54,17 +54,17 @@ module controller import common_pkg::*; (
         r_instr_ctrl = '0;
         r_instr_ctrl.rf_wr_en = 1'b1;
         case (r_instr_code)
-            ADD:        r_instr_code.alu_func = ALU_ADD;
-            SUB:        r_instr_code.alu_func = ALU_SUB;
-            SLL:        r_instr_code.alu_func = ALU_SLL;
-            SLT:        r_instr_code.alu_func = ALU_SLT;
-            SLTU:       r_instr_code.alu_func = ALU_SLTU;
-            XOR:        r_instr_code.alu_func = ALU_XOR;
-            SRL:        r_instr_code.alu_func = ALU_SRL;
-            SRA:        r_instr_code.alu_func = ALU_SRA;
-            OR:         r_instr_code.alu_func = ALU_OR;
-            AND:        r_instr_code.alu_func = ALU_AND;
-            default:    r_instr_code.alu_func = ALU_ADD;
+            ADD:        r_instr_ctrl.alu_func = ALU_ADD;
+            SUB:        r_instr_ctrl.alu_func = ALU_SUB;
+            SLL:        r_instr_ctrl.alu_func = ALU_SLL;
+            SLT:        r_instr_ctrl.alu_func = ALU_SLT;
+            SLTU:       r_instr_ctrl.alu_func = ALU_SLTU;
+            XOR:        r_instr_ctrl.alu_func = ALU_XOR;
+            SRL:        r_instr_ctrl.alu_func = ALU_SRL;
+            SRA:        r_instr_ctrl.alu_func = ALU_SRA;
+            OR:         r_instr_ctrl.alu_func = ALU_OR;
+            AND:        r_instr_ctrl.alu_func = ALU_AND;
+            default:    r_instr_ctrl.alu_func = ALU_ADD;
         endcase
     end
 

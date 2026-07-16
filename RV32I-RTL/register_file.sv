@@ -36,7 +36,7 @@ module register_file (
             logic wr_en;
             assign wr_en = wr_en_i & (rd_addr_i == i[4:0]);
             always_ff (posedge clk) begin
-                regfile[i] <= wr_data_i;
+                if (wr_en) regfile[i] <= wr_data_i;
             end
         end
     endgenerate

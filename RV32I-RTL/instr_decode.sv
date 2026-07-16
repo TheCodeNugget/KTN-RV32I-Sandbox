@@ -58,7 +58,7 @@ module instr_decoder import common_pkg::*; (
     assign funct7   = instr_i[31:25];
 
     assign i_type_imm = {{20{instr_i[31]}}, instr_i[31:20]};
-    assign s_type_imm = {{21{instr_i[31]}}, instr_i[31:25], instr_i[11:7]};
+    assign s_type_imm = {{21{instr_i[31]}}, instr_i[30:25], instr_i[11:7]};
     assign b_type_imm = {{20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8], 1'b0};
     assign u_type_imm = {instr_i[31:12], 12'h0};
     assign j_type_imm = {{12{instr_i[31]}}, instr_i[19:12], instr_i[20], instr_i[30:21], 1'b0};
@@ -77,7 +77,7 @@ module instr_decoder import common_pkg::*; (
             B_TYPE:     instr_imm = b_type_imm;
             U_TYPE_0,
             U_TYPE_1:   instr_imm = u_type_imm;
-            J_TYPE:     instr_imm = i_type_imm;
+            J_TYPE:     instr_imm = j_type_imm;
             default:    instr_imm = 32'h0;
         endcase
     end
