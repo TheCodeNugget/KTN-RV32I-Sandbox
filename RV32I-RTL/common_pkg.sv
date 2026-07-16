@@ -20,16 +20,16 @@ package common_pkg;
     } riscv_op_t;
 
     typedef enum logic [3:0] {
-        ADD,
-        SUB,
-        SLL,
-        SRL,
-        SRA,
-        OR,
-        AND,
-        XOR,
-        SLTU,
-        SLT
+        ALU_ADD,
+        ALU_SUB,
+        ALU_SLL,
+        ALU_SRL,
+        ALU_SRA,
+        ALU_OR,
+        ALU_AND,
+        ALU_XOR,
+        ALU_SLTU,
+        ALU_SLT
     } alu_op_t;
 
     typedef enum logic [1:0] {

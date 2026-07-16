@@ -35,16 +35,16 @@ module alu import common_pkg::*; (
     always_comb begin
         alu_result = 32'h0;
         case (op_sel_i)
-            ADD:    alu_result = opr_a_i + opr_b_i;
-            SUB: 	alu_result = opr_a_i - opr_b_i;
-            SLL:	alu_result = opr_a_i << opr_b_i[4:0];
-            SRL: 	alu_result = opr_a_i >> opr_b_i[4:0];
-            SRA: 	alu_result = $signed(opr_a_i) >>> opr_b_i[4:0];
-            OR:     alu_result = opr_a_i | opr_b_i;
-            AND: 	alu_result = opr_a_i & opr_b_i;
-            XOR:	alu_result = opr_a_i ^ opr_b_i;
-            SLTU:   alu_result = {31'h0, (opr_a_i < opr_b_i)};
-            SLT: 	begin
+            ALU_ADD:    alu_result = opr_a_i + opr_b_i;
+            ALU_SUB: 	alu_result = opr_a_i - opr_b_i;
+            ALU_SLL:	alu_result = opr_a_i << opr_b_i[4:0];
+            ALU_SRL: 	alu_result = opr_a_i >> opr_b_i[4:0];
+            ALU_SRA: 	alu_result = $signed(opr_a_i) >>> opr_b_i[4:0];
+            ALU_OR:     alu_result = opr_a_i | opr_b_i;
+            ALU_AND: 	alu_result = opr_a_i & opr_b_i;
+            ALU_XOR:	alu_result = opr_a_i ^ opr_b_i;
+            ALU_SLTU:   alu_result = {31'h0, (opr_a_i < opr_b_i)};
+            ALU_SLT: 	begin
                 if (opr_a_i[31] == opr_b_i[31]) alu_result = {31'h0, twos_comp_a < twos_comp_b};
                 else alu_result = {31'h0, opr_a_i[31]};
             end
