@@ -24,7 +24,7 @@ module instr_fetch (
         else instr_req_q <= 1'b1;
     end
 
-    assign instr_req_o  <= instr_req_q;
-    assign instr_addr_o <= instr_pc_i;
-    assign instr_o      <= mem_rd_data_i;
+    assign instr_req_o  = instr_req_q;
+    assign instr_addr_o = instr_pc_i;
+    assign instr_o      = mem_rd_data_i;
 endmodule

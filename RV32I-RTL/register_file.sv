@@ -26,7 +26,7 @@ module register_file (
     logic [31:0] [31:0] regfile;
 
     // Hardwire X0 to 0 As described by ISA
-    always_ff (negedge reset_n) begin
+    always_ff @(negedge reset_n) begin
         regfile[0] <= 32'h0;
     end
 
@@ -35,7 +35,7 @@ module register_file (
         for (genvar i = 1; i < 32; i++) begin
             logic wr_en;
             assign wr_en = wr_en_i & (rd_addr_i == i[4:0]);
-            always_ff (posedge clk) begin
+            always_ff @(posedge clk) begin
                 if (wr_en) regfile[i] <= wr_data_i;
             end
         end

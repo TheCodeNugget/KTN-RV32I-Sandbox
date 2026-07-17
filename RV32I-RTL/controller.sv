@@ -32,7 +32,6 @@ module controller import common_pkg::*; (
     output  logic [3:0] alu_func_o      // ALU Function Select
 );
 
-
     // --------------------------------------------------------
     // Internal Signal List
     // --------------------------------------------------------
@@ -110,11 +109,11 @@ module controller import common_pkg::*; (
             ORI:		i_instr_ctrl.alu_func = ALU_OR;
             ANDI:		i_instr_ctrl.alu_func = ALU_AND;
             SLLI:		i_instr_ctrl.alu_func = ALU_SLL;
-            SRXI:	    i_instr_ctrl.alu_func = (instr_funct7_bit5_i) ? ALU_SRA : ALU_SRL;
+            SRXI:	    i_instr_ctrl.alu_func = (funct7_bit5_i) ? ALU_SRA : ALU_SRL;
             default:    i_instr_ctrl = '0;
         endcase
 
-        if ((instr_opcode_i == I_TYPE_2)) begin
+        if ((opcode_i == I_TYPE_2)) begin
             i_instr_ctrl.rf_wr_src  = PC;
             i_instr_ctrl.pc_sel     = 1'b1;
             i_instr_ctrl.alu_func   = ALU_ADD;
@@ -129,7 +128,7 @@ module controller import common_pkg::*; (
         s_instr_ctrl.data_req   = 1'b1;
         s_instr_ctrl.data_wr	= 1'b1;
         s_instr_ctrl.op2_sel	= 1'b1;
-        case (instr_funct3_i)
+        case (funct3_i)
             SB:	        s_instr_ctrl.data_byte = BYTE;
             SH:	        s_instr_ctrl.data_byte = HALF;
             SW:	        s_instr_ctrl.data_byte = WORD;
@@ -153,7 +152,7 @@ module controller import common_pkg::*; (
     always_comb begin
         u_instr_ctrl            = '0;
         u_instr_ctrl.rf_wr_en   = 1'b1;
-        case (instr_opcode_i)
+        case (opcode_i)
             AUIPC:   	{u_instr_ctrl.op2_sel, u_instr_ctrl.op1_sel} = {1'b1, 1'b1};
             LUI:   		u_instr_ctrl.rf_wr_src = IMM;
             default:    u_instr_ctrl = '0;
@@ -175,26 +174,26 @@ module controller import common_pkg::*; (
     // --------------------------------------------------------
     // Instruction Control Multiplexing
     // --------------------------------------------------------
-    assign mux_instr_ctrl = is_r_type_i ? r_instr_ctrl :
-                            is_i_type_i ? i_instr_ctrl :
-                            is_s_type_i ? s_instr_ctrl :
-                            is_b_type_i ? b_instr_ctrl :
-                            is_u_type_i ? u_instr_ctrl :
-                            is_j_type_i ? j_instr_ctrl :
+    assign mux_instr_ctrl = r_type_i ? r_instr_ctrl :
+                            i_type_i ? i_instr_ctrl :
+                            s_type_i ? s_instr_ctrl :
+                            b_type_i ? b_instr_ctrl :
+                            u_type_i ? u_instr_ctrl :
+                            j_type_i ? j_instr_ctrl :
                                         '0;
 
     // --------------------------------------------------------
     // Output Assignments
     // --------------------------------------------------------
     assign pc_sel_o     = mux_instr_ctrl.pc_sel;
-    assign op1sel_o     = mux_instr_ctrl.op1_sel;
-    assign op2sel_o     = mux_instr_ctrl.op2_sel;
+    assign op1_sel_o    = mux_instr_ctrl.op1_sel;
+    assign op2_sel_o    = mux_instr_ctrl.op2_sel;
     assign alu_func_o   = mux_instr_ctrl.alu_func;
     assign rf_wr_en_o   = mux_instr_ctrl.rf_wr_en;
     assign data_req_o   = mux_instr_ctrl.data_req;
     assign data_byte_o  = mux_instr_ctrl.data_byte;
     assign data_wr_o    = mux_instr_ctrl.data_wr;
     assign zero_extnd_o = mux_instr_ctrl.zero_extnd;
-    assign rf_wr_data_o = mux_instr_ctrl.rf_wr_src;
+    assign rf_wr_src_o  = mux_instr_ctrl.rf_wr_src;
 
 endmodule

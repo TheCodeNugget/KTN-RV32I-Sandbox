@@ -5,7 +5,7 @@
 /// RV32I Data Memory Manager
 /// --------------------------------------------------------
 
-module data_memory (
+module data_memory import common_pkg::*; (
     input   logic   clk,
     input   logic   reset_n,
     

@@ -5,7 +5,7 @@
 /// RV32I Branch Control Unit
 /// --------------------------------------------------------
 
-module yarp_branch_control import yarp_pkg::*; (
+module branch_controller import common_pkg::*; (
   // Source operands
   input  logic [31:0] opr_a_i,
   input  logic [31:0] opr_b_i,
@@ -34,7 +34,7 @@ module yarp_branch_control import yarp_pkg::*; (
 
     always_comb begin
         branch_taken = 1'b0;
-        case (instr_func3_ctl_i)
+        case (funct3_i)
             BEQ:	branch_taken = opr_a_i == opr_b_i;
             BNE:	branch_taken = opr_a_i != opr_b_i;
             BLT: begin
@@ -51,6 +51,6 @@ module yarp_branch_control import yarp_pkg::*; (
         endcase
     end
     
-    assign branch_taken_o = branch_taken & is_b_type_ctl_i;
+    assign branch_taken_o = branch_taken & b_type_i;
 
 endmodule

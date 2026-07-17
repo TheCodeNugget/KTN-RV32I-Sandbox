@@ -5,8 +5,8 @@
 /// RV32I CPU Top
 /// --------------------------------------------------------
 
-module top import common_pkg::*; (
-    parameter RESET_PC = 32'h1000;
+module top import common_pkg::*; #(
+    parameter RESET_PC = 32'h1000
 ) (
     input   logic   clk,
     input   logic   reset_n,
@@ -79,8 +79,8 @@ module top import common_pkg::*; (
         else reset_seen <= 1'b1;
     end
 
-    assign pc_next_seq <= pc_q + 32'h4;
-    assign pc_next <= (branch_taken | ctrl_pc_sel) ? {alu_result[31:1], 1'b0} : pc_next_seq;
+    assign pc_next_seq = pc_q + 32'h4;
+    assign pc_next = (branch_taken | ctrl_pc_sel) ? {alu_result[31:1], 1'b0} : pc_next_seq;
     always_ff @(posedge clk or negedge reset_n) begin
         if (~reset_n) pc_q <= RESET_PC;
         else if (reset_seen) pc_q <= pc_next;
@@ -127,10 +127,11 @@ module top import common_pkg::*; (
 
     always_comb begin
         case(ctrl_rf_wr_src)
-        ALU:    rf_wr_data_mux = alu_result;
-        MEM:    rf_wr_data_mux = dmem_rd_data;
-        IMM:    rf_wr_data_mux = dec_imm;
-        PC:     rf_wr_data_mux = pc_next_seq;
+            ALU:    rf_wr_data_mux = alu_result;
+            MEM:    rf_wr_data_mux = dmem_rd_data;
+            IMM:    rf_wr_data_mux = dec_imm;
+            PC:     rf_wr_data_mux = pc_next_seq;
+        endcase
     end
 
     register_file u_register_file (
@@ -139,7 +140,7 @@ module top import common_pkg::*; (
         .rs1_addr_i             (dec_rs1_addr),
         .rs2_addr_i             (dec_rs2_addr),
         .wr_en_i                (ctrl_rf_wr_en),
-        .rd_addr_i              (rd_addr_i),
+        .rd_addr_i              (dec_rd_addr),
         .wr_data_i              (rf_wr_data_mux),
         .rs1_data_o             (rf_rs1_data),
         .rs2_data_o             (rf_rs2_data)
