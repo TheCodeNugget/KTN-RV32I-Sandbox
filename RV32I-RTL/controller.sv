@@ -26,10 +26,10 @@ module controller import common_pkg::*; (
     output  logic       data_req_o,     // Data Memory Request Flag
     output  logic       data_wr_o,      // Data Memory WR/RD Select
     output  logic       zero_extnd_o,   // ZERO Extend Flag for Data Memory
-    output  logic       rf_wr_en,       // Register File WR/RD Select
-    output  logic [1:0] data_byte,      // Data RD/WR Length Select
-    output  logic [1:0] rf_wr_src,      // Register File Write Data Source Select
-    output  logic [3:0] alu_func        // ALU Function Select
+    output  logic       rf_wr_en_o,     // Register File WR/RD Select
+    output  logic [1:0] data_byte_o,    // Data RD/WR Length Select
+    output  logic [1:0] rf_wr_src_o,    // Register File Write Data Source Select
+    output  logic [3:0] alu_func_o      // ALU Function Select
 );
 
 
